@@ -129,7 +129,6 @@ public class HttpClientUtils {
         return sslSocketFactory;
     }
 
-    //实现X509TrustManager接口
     private static class MyTrustManager implements X509TrustManager {
 
         @Override
