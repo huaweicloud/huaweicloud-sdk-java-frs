@@ -9,6 +9,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.KeyManagementException;
@@ -93,7 +94,7 @@ public class FrsAccess extends AccessServiceImpl {
         return response;
     }
 
-    public Response post(String requestUrl, RequestBody requestBody) {
+    public Response post(String requestUrl, RequestBody requestBody) throws IOException {
 
         URL url = null;
         try {
@@ -107,6 +108,8 @@ public class FrsAccess extends AccessServiceImpl {
         header.put("Content-Type", requestBody.contentType().toString());
         try {
             response = accessEntity(url, header, requestBody, (long) requestBody.contentLength(), httpMethod);
+        } catch (IOException e) {
+            throw e;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

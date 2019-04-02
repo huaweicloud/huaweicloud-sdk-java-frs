@@ -4,6 +4,7 @@ import com.huaweicloud.frs.access.FrsAccess;
 import com.huaweicloud.frs.access.FrsAccessWithProxy;
 import com.huaweicloud.frs.client.param.AuthInfo;
 import com.huaweicloud.frs.client.param.ProxyHostInfo;
+import com.huaweicloud.frs.client.service.v2.ApiCollectionV2;
 
 /**
  * SDK main entry.
@@ -21,6 +22,8 @@ public class FrsClient implements AutoCloseable {
     private FaceSetService faceSetService;
     private LiveDetectService liveDetectService;
     private QualityService qualityService;
+
+    private ApiCollectionV2 apiCollectionV2;
 
     /**
      * Construct client with auth info and project id
@@ -74,6 +77,8 @@ public class FrsClient implements AutoCloseable {
         this.faceSetService = new FaceSetService(this.service, this.projectId);
         this.liveDetectService = new LiveDetectService(this.service, this.projectId);
         this.qualityService = new QualityService(this.service, this.projectId);
+
+        this.apiCollectionV2 = new ApiCollectionV2(this.service, this.projectId);
     }
 
     private void init(AuthInfo authInfo, String projectId, ProxyHostInfo proxyHostInfo) {
@@ -159,6 +164,10 @@ public class FrsClient implements AutoCloseable {
      */
     public QualityService getQualityService() {
         return this.qualityService;
+    }
+
+    public ApiCollectionV2 getV2() {
+        return this.apiCollectionV2;
     }
 
     @Override

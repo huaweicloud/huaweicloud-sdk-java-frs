@@ -38,7 +38,7 @@ public class CompareService {
     }
 
     private CompareFaceResult compareFace(String image1, String image2, ImageType imageType) throws FrsException, IOException {
-        String uri = String.format(FrsConstant.getFaceCompareUri(), this.projectId);
+        String uri = String.format(FrsConstant.V1.getFaceCompareUri(), this.projectId);
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> json = new HashMap<>();
         if (ImageType.BASE64 == imageType) {
@@ -77,7 +77,7 @@ public class CompareService {
      * @throws IOException  IO exception
      */
     public CompareFaceResult compareFaceByFile(String filePath1, String filePath2) throws FrsException, IOException {
-        String uri = String.format(FrsConstant.getFaceCompareUri(), this.projectId);
+        String uri = String.format(FrsConstant.V1.getFaceCompareUri(), this.projectId);
         File image1 = new File(filePath1);
         File image2 = new File(filePath2);
         RequestBody image1Body = RequestBody.create(MediaType.parse("application/octet-stream"), image1);

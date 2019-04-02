@@ -41,7 +41,7 @@ public class QualityService {
     }
 
     private FaceQualityResult faceQuality(String image, ImageType imageType) throws FrsException, IOException {
-        String uri = String.format(FrsConstant.getFaceQualityUri(), this.projectId);
+        String uri = String.format(FrsConstant.V1.getFaceQualityUri(), this.projectId);
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> json = new HashMap<>();
         if (ImageType.BASE64 == imageType) {
@@ -96,7 +96,7 @@ public class QualityService {
     }
 
     private BlurClassifyResult blurClassify(String image, ImageType imageType) throws FrsException, IOException {
-        String uri = String.format(FrsConstant.getBlurClassifyUri(), this.projectId);
+        String uri = String.format(FrsConstant.V1.getBlurClassifyUri(), this.projectId);
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> json = new HashMap<>();
         if (ImageType.BASE64 == imageType) {
@@ -150,7 +150,7 @@ public class QualityService {
     }
 
     private HeadPoseEstimateResult headPoseEstimate(String image, ImageType imageType) throws FrsException, IOException {
-        String uri = String.format(FrsConstant.getHeadPoseEstimate(), this.projectId);
+        String uri = String.format(FrsConstant.V1.getHeadPoseEstimate(), this.projectId);
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> json = new HashMap<>();
         if (ImageType.BASE64 == imageType) {

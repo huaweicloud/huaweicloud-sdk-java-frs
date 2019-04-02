@@ -41,7 +41,7 @@ public class SearchService {
 
     private SearchFaceResult searchFace(String faceSetName, String image, Integer topN, Double threshold, ImageType imageType,
                                         SearchSort searchSort, SearchReturnFields searchReturnFields, String filter) throws FrsException, IOException {
-        String uri = String.format(FrsConstant.getFaceSearchUri(), this.projectId, faceSetName);
+        String uri = String.format(FrsConstant.V1.getFaceSearchUri(), this.projectId, faceSetName);
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> json = new HashMap<>();
         if (ImageType.BASE64 == imageType) {
@@ -135,7 +135,7 @@ public class SearchService {
      */
     public SearchFaceResult searchFaceByFile(String faceSetName, String filePath, Integer topN, Double threshold,
                                              SearchSort searchSort, SearchReturnFields searchReturnFields, String filter) throws FrsException, IOException {
-        String uri = String.format(FrsConstant.getFaceSearchUri(), this.projectId, faceSetName);
+        String uri = String.format(FrsConstant.V1.getFaceSearchUri(), this.projectId, faceSetName);
         ObjectMapper mapper = new ObjectMapper();
         File image = new File(filePath);
         RequestBody imageBody = RequestBody.create(MediaType.parse("application/octet-stream"), image);

@@ -39,7 +39,7 @@ public class LiveDetectService {
     }
 
     private LiveDetectResult liveDetect(String video, ImageType videoType, String actions, String actionTime) throws FrsException, IOException {
-        String uri = String.format(FrsConstant.getLiveDetectUri(), this.projectId);
+        String uri = String.format(FrsConstant.V1.getLiveDetectUri(), this.projectId);
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> json = new HashMap<>();
         if (ImageType.BASE64 == videoType) {
@@ -95,7 +95,7 @@ public class LiveDetectService {
      * @throws IOException  IO exception
      */
     public LiveDetectResult liveDetectByFile(String videoPath, String actions, String actionTime) throws FrsException, IOException {
-        String uri = String.format(FrsConstant.getLiveDetectUri(), this.projectId);
+        String uri = String.format(FrsConstant.V1.getLiveDetectUri(), this.projectId);
         File video = new File(videoPath);
         RequestBody videoBody = RequestBody.create(MediaType.parse("application/octet-stream"), video);
         MultipartBody.Builder builder = new MultipartBody.Builder();

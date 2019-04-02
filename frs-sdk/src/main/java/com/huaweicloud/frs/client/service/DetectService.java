@@ -39,7 +39,7 @@ public class DetectService {
     }
 
     private DetectFaceResult detectFace(String image, ImageType imageType, String attributes) throws FrsException, IOException {
-        String uri = String.format(FrsConstant.getFaceDetectUri(), this.projectId);
+        String uri = String.format(FrsConstant.V1.getFaceDetectUri(), this.projectId);
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> json = new HashMap<>();
         if (ImageType.BASE64 == imageType) {
@@ -92,7 +92,7 @@ public class DetectService {
      * @throws IOException  IO exception
      */
     public DetectFaceResult detectFaceByFile(String filePath, String attributes) throws FrsException, IOException {
-        String uri = String.format(FrsConstant.getFaceDetectUri(), this.projectId);
+        String uri = String.format(FrsConstant.V1.getFaceDetectUri(), this.projectId);
         File image = new File(filePath);
         RequestBody imageBody = RequestBody.create(MediaType.parse("application/octet-stream"), image);
         MultipartBody.Builder builder = new MultipartBody.Builder();

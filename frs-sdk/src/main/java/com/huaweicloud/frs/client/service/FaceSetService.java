@@ -49,7 +49,7 @@ public class FaceSetService {
      * @throws IOException  IO exception
      */
     public CreateFaceSetResult createFaceSet(String faceSetName, Integer faceSetCapacity, CreateExternalFields createExternalFields) throws FrsException, IOException {
-        String uri = String.format(FrsConstant.getFaceSetCreateUri(), this.projectId);
+        String uri = String.format(FrsConstant.V1.getFaceSetCreateUri(), this.projectId);
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> json = new HashMap<>();
         json.put("face_set_name", faceSetName);
@@ -97,7 +97,7 @@ public class FaceSetService {
      * @throws IOException  IO exception
      */
     public GetAllFaceSetsResult getAllFaceSets() throws FrsException, IOException {
-        String uri = String.format(FrsConstant.getFaceSetGetAllUri(), this.projectId);
+        String uri = String.format(FrsConstant.V1.getFaceSetGetAllUri(), this.projectId);
         Response httpResponse = this.service.get(uri);
         return HttpResponseUtils.httpResponse2Result(httpResponse, GetAllFaceSetsResult.class);
     }
@@ -111,7 +111,7 @@ public class FaceSetService {
      * @throws IOException  IO exception
      */
     public GetFaceSetResult getFaceSet(String faceSetName) throws FrsException, IOException {
-        String uri = String.format(FrsConstant.getFaceSetGetOneUri(), this.projectId, faceSetName);
+        String uri = String.format(FrsConstant.V1.getFaceSetGetOneUri(), this.projectId, faceSetName);
         Response httpResponse = this.service.get(uri);
         return HttpResponseUtils.httpResponse2Result(httpResponse, GetFaceSetResult.class);
     }
@@ -125,7 +125,7 @@ public class FaceSetService {
      * @throws IOException  IO exception
      */
     public DeleteFaceSetResult deleteFaceSet(String faceSetName) throws FrsException, IOException {
-        String uri = String.format(FrsConstant.getFaceSetDeleteUri(), this.projectId, faceSetName);
+        String uri = String.format(FrsConstant.V1.getFaceSetDeleteUri(), this.projectId, faceSetName);
         Response httpResponse = this.service.delete(uri);
         return HttpResponseUtils.httpResponse2Result(httpResponse, DeleteFaceSetResult.class);
     }

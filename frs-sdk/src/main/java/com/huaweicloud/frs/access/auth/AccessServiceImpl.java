@@ -19,6 +19,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.KeyManagementException;
@@ -236,7 +237,8 @@ public class AccessServiceImpl extends AccessService {
 
     @Override
     public Response accessEntity(URL url, Map<String, String> header, RequestBody requestBody,
-                                 Long contentLength, HttpMethodName httpMethod) throws Exception {
+                                 Long contentLength, HttpMethodName httpMethod)
+            throws IOException, KeyManagementException, KeyStoreException, NoSuchAlgorithmException{
         // Make a request for signing.
         Request request = new DefaultRequest(this.serviceName);
         try {
