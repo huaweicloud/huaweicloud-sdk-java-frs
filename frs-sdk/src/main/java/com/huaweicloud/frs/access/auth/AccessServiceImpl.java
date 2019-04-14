@@ -171,7 +171,7 @@ public class AccessServiceImpl extends AccessService {
                            HttpMethodName httpMethod) throws Exception {
 
         // Make a request for signing.
-        Request request = new DefaultRequest(this.serviceName);
+        Request request = new DefaultRequest();
         try {
             // Set the request address.
             request.setEndpoint(url.toURI());
@@ -240,7 +240,7 @@ public class AccessServiceImpl extends AccessService {
                                  Long contentLength, HttpMethodName httpMethod)
             throws IOException, KeyManagementException, KeyStoreException, NoSuchAlgorithmException{
         // Make a request for signing.
-        Request request = new DefaultRequest(this.serviceName);
+        Request request = new DefaultRequest();
         try {
             // Set the request address.
             request.setEndpoint(url.toURI());
