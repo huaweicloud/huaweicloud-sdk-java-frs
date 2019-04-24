@@ -6,6 +6,7 @@ public class FrsConstant {
         private static final String faceCompareUri = "/v1/%s/face-compare";
         private static final String faceSearchUri = "/v1/%s/face-sets/%s/search";
         private static final String faceAddUri = "/v1/%s/face-sets/%s/faces";
+        private static final String faceUpdateUri = "/v1/%s/face-sets/%s/faces";
         private static final String faceGetRangeUri = "/v1/%s/face-sets/%s/faces?offset=%d&limit=%d";
         private static final String faceGetOneUri = "/v1/%s/face-sets/%s/faces?face_id=%s";
         private static final String faceDeleteByExternalImageIdUri = "/v1/%s/face-sets/%s/faces?external_image_id=%s";
@@ -34,6 +35,10 @@ public class FrsConstant {
 
         public static String getFaceAddUri() {
             return faceAddUri;
+        }
+
+        public static String getFaceUpdateUri() {
+            return faceUpdateUri;
         }
 
         public static String getFaceGetRangeUri() {

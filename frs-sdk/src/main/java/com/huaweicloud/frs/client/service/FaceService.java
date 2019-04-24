@@ -4,9 +4,11 @@ package com.huaweicloud.frs.client.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.huaweicloud.frs.access.FrsAccess;
 import com.huaweicloud.frs.client.param.AddExternalFields;
+import com.huaweicloud.frs.client.param.UpdateExternalFields;
 import com.huaweicloud.frs.client.result.AddFaceResult;
 import com.huaweicloud.frs.client.result.DeleteFaceResult;
 import com.huaweicloud.frs.client.result.GetFaceResult;
+import com.huaweicloud.frs.client.result.UpdateFaceResult;
 import com.huaweicloud.frs.common.FrsConstant;
 import com.huaweicloud.frs.common.FrsException;
 import com.huaweicloud.frs.common.ImageType;
@@ -41,7 +43,7 @@ public class FaceService {
         this.projectId = projectId;
     }
 
-    private AddFaceResult addFace(String faceSetName, String externalImageId, String image, ImageType imageType, AddExternalFields addExternalFields) throws FrsException, IOException {
+    private AddFaceResult addFace(String faceSetName, String externalImageId, String image, ImageType imageType, AddExternalFields addExternalFields, boolean singleFace) throws FrsException, IOException {
         String uri = String.format(FrsConstant.V1.getFaceAddUri(), this.projectId, faceSetName);
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> json = new HashMap<>();
@@ -56,10 +58,19 @@ public class FaceService {
         if (null != addExternalFields) {
             json.put("external_fields", addExternalFields.getExternalFields());
         }
+        json.put("single", singleFace);
 
         RequestBody requestBody = RequestBody.create(JSON, mapper.writeValueAsString(json));
         Response httpResponse = this.service.post(uri, requestBody);
         return HttpResponseUtils.httpResponse2Result(httpResponse, AddFaceResult.class);
+    }
+
+    public AddFaceResult addFaceByBase64(String faceSetName, String externalImageId,
+                                         String imageBase64, AddExternalFields addExternalFields,
+                                         boolean singleFace) throws FrsException, IOException {
+        return this.addFace(faceSetName, externalImageId,
+                imageBase64, ImageType.BASE64,
+                addExternalFields, singleFace);
     }
 
     /**
@@ -73,8 +84,12 @@ public class FaceService {
      * @throws FrsException Throws while http status code is not 200
      * @throws IOException  IO exception
      */
-    public AddFaceResult addFaceByBase64(String faceSetName, String externalImageId, String imageBase64, AddExternalFields addExternalFields) throws FrsException, IOException {
-        return this.addFace(faceSetName, externalImageId, imageBase64, ImageType.BASE64, addExternalFields);
+    public AddFaceResult addFaceByBase64(String faceSetName, String externalImageId,
+                                         String imageBase64, AddExternalFields addExternalFields)
+            throws FrsException, IOException {
+        return this.addFaceByBase64(faceSetName, externalImageId,
+                imageBase64, addExternalFields,
+                false);
     }
 
     /**
@@ -88,7 +103,15 @@ public class FaceService {
      * @throws IOException  IO exception
      */
     public AddFaceResult addFaceByBase64(String faceSetName, String imageBase64, AddExternalFields addExternalFields) throws FrsException, IOException {
-        return this.addFaceByBase64(faceSetName, null, imageBase64, addExternalFields);
+        return this.addFaceByBase64(faceSetName, null, imageBase64, addExternalFields, false);
+    }
+
+    public AddFaceResult addFaceByBase64(String faceSetName, String imageBase64, AddExternalFields addExternalFields,
+                                         boolean singleFace)
+            throws FrsException, IOException {
+        return this.addFaceByBase64(faceSetName, null,
+                imageBase64, addExternalFields,
+                singleFace);
     }
 
     /**
@@ -102,7 +125,15 @@ public class FaceService {
      * @throws IOException  IO exception
      */
     public AddFaceResult addFaceByBase64(String faceSetName, String externalImageId, String imageBase64) throws FrsException, IOException {
-        return this.addFaceByBase64(faceSetName, externalImageId, imageBase64, null);
+        return this.addFaceByBase64(faceSetName, externalImageId, imageBase64, null, false);
+    }
+
+    public AddFaceResult addFaceByBase64(String faceSetName, String externalImageId, String imageBase64,
+                                         boolean singleFace)
+            throws FrsException, IOException {
+        return this.addFaceByBase64(faceSetName, externalImageId,
+                imageBase64, null,
+                singleFace);
     }
 
     /**
@@ -115,7 +146,15 @@ public class FaceService {
      * @throws IOException  IO exception
      */
     public AddFaceResult addFaceByBase64(String faceSetName, String imageBase64) throws FrsException, IOException {
-        return this.addFaceByBase64(faceSetName, null, imageBase64, null);
+        return this.addFaceByBase64(faceSetName, null, imageBase64, null, false);
+    }
+
+    public AddFaceResult addFaceByBase64(String faceSetName, String imageBase64,
+                                         boolean singleFace)
+            throws FrsException, IOException {
+        return this.addFaceByBase64(faceSetName, null,
+                imageBase64, null,
+                singleFace);
     }
 
     /**
@@ -129,7 +168,7 @@ public class FaceService {
      * @throws FrsException Throws while http status code is not 200
      * @throws IOException  IO exception
      */
-    public AddFaceResult addFaceByFile(String faceSetName, String externalImageId, String filePath, AddExternalFields addExternalFields) throws FrsException, IOException {
+    public AddFaceResult addFaceByFile(String faceSetName, String externalImageId, String filePath, AddExternalFields addExternalFields, boolean singleFace) throws FrsException, IOException {
         String uri = String.format(FrsConstant.V1.getFaceAddUri(), this.projectId, faceSetName);
         File image = new File(filePath);
         ObjectMapper mapper = new ObjectMapper();
@@ -143,9 +182,14 @@ public class FaceService {
         if (addExternalFields != null) {
             builder.addFormDataPart("external_fields", mapper.writeValueAsString(addExternalFields.getExternalFields()));
         }
+        builder.addFormDataPart("single", singleFace ? "true" : "false");
         RequestBody requestBody = builder.build();
         Response httpResponse = this.service.post(uri, requestBody);
         return HttpResponseUtils.httpResponse2Result(httpResponse, AddFaceResult.class);
+    }
+
+    public AddFaceResult addFaceByFile(String faceSetName, String externalImageId, String filePath, AddExternalFields addExternalFields) throws FrsException, IOException {
+        return this.addFaceByFile(faceSetName, externalImageId, filePath, addExternalFields, false);
     }
 
     /**
@@ -159,7 +203,11 @@ public class FaceService {
      * @throws IOException  IO exception
      */
     public AddFaceResult addFaceByFile(String faceSetName, String filePath, AddExternalFields addExternalFields) throws FrsException, IOException {
-        return this.addFaceByFile(faceSetName, null, filePath, addExternalFields);
+        return this.addFaceByFile(faceSetName, null, filePath, addExternalFields, false);
+    }
+
+    public AddFaceResult addFaceByFile(String faceSetName, String filePath, AddExternalFields addExternalFields, boolean singleFace) throws FrsException, IOException {
+        return this.addFaceByFile(faceSetName, null, filePath, addExternalFields, singleFace);
     }
 
     /**
@@ -173,7 +221,11 @@ public class FaceService {
      * @throws IOException  IO exception
      */
     public AddFaceResult addFaceByFile(String faceSetName, String externalImageId, String filePath) throws FrsException, IOException {
-        return this.addFaceByFile(faceSetName, externalImageId, filePath, null);
+        return this.addFaceByFile(faceSetName, externalImageId, filePath, null, false);
+    }
+
+    public AddFaceResult addFaceByFile(String faceSetName, String externalImageId, String filePath, boolean singleFace) throws FrsException, IOException {
+        return this.addFaceByFile(faceSetName, externalImageId, filePath, null, singleFace);
     }
 
     /**
@@ -186,7 +238,15 @@ public class FaceService {
      * @throws IOException  IO exception
      */
     public AddFaceResult addFaceByFile(String faceSetName, String filePath) throws FrsException, IOException {
-        return this.addFaceByFile(faceSetName, null, filePath, null);
+        return this.addFaceByFile(faceSetName, null, filePath, null, false);
+    }
+
+    public AddFaceResult addFaceByFile(String faceSetName, String filePath, boolean singleFace) throws FrsException, IOException {
+        return this.addFaceByFile(faceSetName, null, filePath, null, singleFace);
+    }
+
+    public AddFaceResult addFaceByObsUrl(String faceSetName, String externalImageId, String obsUrl, AddExternalFields addExternalFields, boolean singleFace) throws FrsException, IOException {
+        return this.addFace(faceSetName, externalImageId, obsUrl, ImageType.OBSURL, addExternalFields, singleFace);
     }
 
     /**
@@ -199,7 +259,7 @@ public class FaceService {
      * @throws IOException  IO exception
      */
     public AddFaceResult addFaceByObsUrl(String faceSetName, String externalImageId, String obsUrl, AddExternalFields addExternalFields) throws FrsException, IOException {
-        return this.addFace(faceSetName, externalImageId, obsUrl, ImageType.OBSURL, addExternalFields);
+        return this.addFaceByObsUrl(faceSetName, externalImageId, obsUrl, addExternalFields, false);
     }
 
     /**
@@ -211,7 +271,11 @@ public class FaceService {
      * @throws IOException  IO exception
      */
     public AddFaceResult addFaceByObsUrl(String faceSetName, String obsUrl, AddExternalFields addExternalFields) throws FrsException, IOException {
-        return this.addFaceByObsUrl(faceSetName, null, obsUrl, addExternalFields);
+        return this.addFaceByObsUrl(faceSetName, null, obsUrl, addExternalFields, false);
+    }
+
+    public AddFaceResult addFaceByObsUrl(String faceSetName, String obsUrl, AddExternalFields addExternalFields, boolean singleFace) throws FrsException, IOException {
+        return this.addFaceByObsUrl(faceSetName, null, obsUrl, addExternalFields, singleFace);
     }
 
     /**
@@ -223,7 +287,11 @@ public class FaceService {
      * @throws IOException  IO exception
      */
     public AddFaceResult addFaceByObsUrl(String faceSetName, String externalImageId, String obsUrl) throws FrsException, IOException {
-        return this.addFaceByObsUrl(faceSetName, externalImageId, obsUrl, null);
+        return this.addFaceByObsUrl(faceSetName, externalImageId, obsUrl, null, false);
+    }
+
+    public AddFaceResult addFaceByObsUrl(String faceSetName, String externalImageId, String obsUrl, boolean singleFace) throws FrsException, IOException {
+        return this.addFaceByObsUrl(faceSetName, externalImageId, obsUrl, null, singleFace);
     }
 
     /**
@@ -234,7 +302,11 @@ public class FaceService {
      * @throws IOException  IO exception
      */
     public AddFaceResult addFaceByObsUrl(String faceSetName, String obsUrl) throws FrsException, IOException {
-        return this.addFaceByObsUrl(faceSetName, null, obsUrl, null);
+        return this.addFaceByObsUrl(faceSetName, null, obsUrl, null, false);
+    }
+
+    public AddFaceResult addFaceByObsUrl(String faceSetName, String obsUrl, boolean singleFace) throws FrsException, IOException {
+        return this.addFaceByObsUrl(faceSetName, null, obsUrl, null, singleFace);
     }
 
     /**
@@ -302,5 +374,56 @@ public class FaceService {
         String uri = String.format(FrsConstant.V1.getFaceDeleteByFieldIdUri(), this.projectId, faceSetName, fieldId, fieldValue);
         Response httpResponse = this.service.delete(uri);
         return HttpResponseUtils.httpResponse2Result(httpResponse, DeleteFaceResult.class);
+    }
+
+    /**
+     * Update face by face id
+     * @param faceSetName
+     * @param faceId
+     * @param external_image_id
+     * @param updateExternalFields
+     * @return
+     * @throws FrsException
+     * @throws IOException
+     */
+    public UpdateFaceResult updateFaceByFaceId(String faceSetName, String faceId, String external_image_id, UpdateExternalFields updateExternalFields) throws FrsException, IOException  {
+        String uri = String.format(FrsConstant.V1.getFaceUpdateUri(), this.projectId, faceSetName);
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> json = new HashMap<>();
+        json.put("face_id", faceId);
+        if (external_image_id != null) {
+            json.put("external_image_id", external_image_id);
+        }
+        if (updateExternalFields != null) {
+            json.put("external_fields", updateExternalFields.getExternalFields());
+        }
+        Response httpResponse = this.service.put(uri, mapper.writeValueAsString(json));
+        return HttpResponseUtils.httpResponse2Result(httpResponse, UpdateFaceResult.class);
+    }
+
+    /**
+     * Update face by face id
+     * @param faceSetName
+     * @param faceId
+     * @param external_image_id
+     * @return
+     * @throws FrsException
+     * @throws IOException
+     */
+    public UpdateFaceResult updateFaceByFaceId(String faceSetName, String faceId, String external_image_id) throws FrsException, IOException  {
+        return updateFaceByFaceId(faceSetName, faceId, external_image_id, null);
+    }
+
+    /**
+     * Update face by face ids
+     * @param faceSetName
+     * @param faceId
+     * @param updateExternalFields
+     * @return
+     * @throws FrsException
+     * @throws IOException
+     */
+    public UpdateFaceResult updateFaceByFaceId(String faceSetName, String faceId, UpdateExternalFields updateExternalFields) throws FrsException, IOException  {
+        return updateFaceByFaceId(faceSetName, faceId, null, updateExternalFields);
     }
 }
