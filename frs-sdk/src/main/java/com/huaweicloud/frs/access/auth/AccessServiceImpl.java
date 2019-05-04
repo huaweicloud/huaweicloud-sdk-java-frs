@@ -34,10 +34,11 @@ import java.util.Map;
 
 public class AccessServiceImpl extends AccessService {
 
-    private OkHttpClient client = null;
+    private OkHttpClient client;
 
-    public AccessServiceImpl(String serviceName, String region, String ak, String sk) {
+    public AccessServiceImpl(String serviceName, String region, String ak, String sk) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         super(serviceName, region, ak, sk);
+        client = useDefaultHttpClient() ? getDefaultHttpClient() : getHttpClient();
     }
 
     /**
@@ -228,7 +229,6 @@ public class AccessServiceImpl extends AccessService {
             httpRequestBase = httpRequestBase.newBuilder().addHeader(key, requestHeaders.get(key)).build();
         }
 
-        client = useDefaultHttpClient() ? getDefaultHttpClient() : getHttpClient();
 
         // Send the request, and a response will be returned.
         Response response = client.newCall(httpRequestBase).execute();
@@ -296,8 +296,6 @@ public class AccessServiceImpl extends AccessService {
             httpRequestBase = httpRequestBase.newBuilder().addHeader(key, requestHeaders.get(key)).build();
         }
 
-        client = useDefaultHttpClient() ? getDefaultHttpClient() : getHttpClient();
-//		Headers testHeader=httpRequestBase.headers();
         Response response = client.newCall(httpRequestBase).execute();
         return response;
     }

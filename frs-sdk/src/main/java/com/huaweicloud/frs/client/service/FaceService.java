@@ -59,6 +59,7 @@ public class FaceService {
             json.put("external_fields", addExternalFields.getExternalFields());
         }
         json.put("single", singleFace);
+        json.put("refresh", true);
 
         RequestBody requestBody = RequestBody.create(JSON, mapper.writeValueAsString(json));
         Response httpResponse = this.service.post(uri, requestBody);
@@ -183,6 +184,7 @@ public class FaceService {
             builder.addFormDataPart("external_fields", mapper.writeValueAsString(addExternalFields.getExternalFields()));
         }
         builder.addFormDataPart("single", singleFace ? "true" : "false");
+        builder.addFormDataPart("refresh", "true");
         RequestBody requestBody = builder.build();
         Response httpResponse = this.service.post(uri, requestBody);
         return HttpResponseUtils.httpResponse2Result(httpResponse, AddFaceResult.class);
