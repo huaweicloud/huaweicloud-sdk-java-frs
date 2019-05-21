@@ -4,6 +4,10 @@ package com.huaweicloud.frs.access;
 import com.huaweicloud.frs.client.param.AuthInfo;
 import com.huaweicloud.frs.client.param.ProxyHostInfo;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+
 public class FrsAccessClient {
 
     /**
@@ -39,11 +43,11 @@ public class FrsAccessClient {
         this.authInfo = authInfo;
     }
 
-    public FrsAccess getAccessService(AuthInfo inAuthInfo) {
+    public FrsAccess getAccessService(AuthInfo inAuthInfo) throws Exception {
         return accessWithProxy ? new FrsAccessWithProxy(inAuthInfo, proxyHostInfo) : new FrsAccess(inAuthInfo);
     }
 
-    public FrsAccess getAccessService() {
+    public FrsAccess getAccessService() throws Exception {
         return accessWithProxy ? new FrsAccessWithProxy(authInfo, proxyHostInfo) : new FrsAccess(authInfo);
     }
 

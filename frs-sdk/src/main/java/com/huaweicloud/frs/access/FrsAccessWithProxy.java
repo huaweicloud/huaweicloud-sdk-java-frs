@@ -16,12 +16,12 @@ public class FrsAccessWithProxy extends FrsAccess {
      */
     private ProxyHostInfo proxyHostInfo = null;
 
-    public FrsAccessWithProxy(AuthInfo authInfo, ProxyHostInfo hostInfo) {
+    public FrsAccessWithProxy(AuthInfo authInfo, ProxyHostInfo hostInfo) throws Exception {
         super(authInfo);
         proxyHostInfo = hostInfo;
     }
 
-    public FrsAccessWithProxy(AuthInfo authInfo, ProxyHostInfo hostInfo, int connectionTimeout) {
+    public FrsAccessWithProxy(AuthInfo authInfo, ProxyHostInfo hostInfo, int connectionTimeout) throws Exception {
         super(authInfo);
         proxyHostInfo = hostInfo;
         this.connectionTimeout = connectionTimeout;

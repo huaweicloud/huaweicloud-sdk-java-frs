@@ -6,6 +6,10 @@ import com.huaweicloud.frs.client.param.AuthInfo;
 import com.huaweicloud.frs.client.param.ProxyHostInfo;
 import com.huaweicloud.frs.client.service.v2.ApiCollectionV2;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * SDK main entry.
  * Init with auth info and project id. Provides service instance.
@@ -31,7 +35,7 @@ public class FrsClient implements AutoCloseable {
      * @param authInfo  Authentication information
      * @param projectId Project id
      */
-    public FrsClient(AuthInfo authInfo, String projectId) {
+    public FrsClient(AuthInfo authInfo, String projectId) throws Exception {
         this.init(authInfo, projectId, null);
     }
 
@@ -42,7 +46,7 @@ public class FrsClient implements AutoCloseable {
      * @param projectId     Project id
      * @param proxyHostInfo Proxy information
      */
-    public FrsClient(AuthInfo authInfo, String projectId, ProxyHostInfo proxyHostInfo) {
+    public FrsClient(AuthInfo authInfo, String projectId, ProxyHostInfo proxyHostInfo) throws Exception {
         this.init(authInfo, projectId, proxyHostInfo);
     }
 
@@ -53,7 +57,7 @@ public class FrsClient implements AutoCloseable {
      * @param projectId         Project id
      * @param connectionTimeout Connection timeout
      */
-    public FrsClient(AuthInfo authInfo, String projectId, int connectionTimeout) {
+    public FrsClient(AuthInfo authInfo, String projectId, int connectionTimeout) throws Exception {
         this.init(authInfo, projectId, null, connectionTimeout);
     }
 
@@ -65,7 +69,7 @@ public class FrsClient implements AutoCloseable {
      * @param proxyHostInfo     proxy information
      * @param connectionTimeout Connection timeout
      */
-    public FrsClient(AuthInfo authInfo, String projectId, ProxyHostInfo proxyHostInfo, int connectionTimeout) {
+    public FrsClient(AuthInfo authInfo, String projectId, ProxyHostInfo proxyHostInfo, int connectionTimeout) throws Exception {
         this.init(authInfo, projectId, proxyHostInfo, connectionTimeout);
     }
 
@@ -81,7 +85,7 @@ public class FrsClient implements AutoCloseable {
         this.apiCollectionV2 = new ApiCollectionV2(this.service, this.projectId);
     }
 
-    private void init(AuthInfo authInfo, String projectId, ProxyHostInfo proxyHostInfo) {
+    private void init(AuthInfo authInfo, String projectId, ProxyHostInfo proxyHostInfo) throws Exception {
         this.authInfo = authInfo;
         this.projectId = projectId;
         if (null == proxyHostInfo) {
@@ -92,7 +96,7 @@ public class FrsClient implements AutoCloseable {
         this.initService();
     }
 
-    private void init(AuthInfo authInfo, String projectId, ProxyHostInfo proxyHostInfo, int connectionTimeout) {
+    private void init(AuthInfo authInfo, String projectId, ProxyHostInfo proxyHostInfo, int connectionTimeout) throws Exception {
         this.authInfo = authInfo;
         this.projectId = projectId;
         if (null == proxyHostInfo) {

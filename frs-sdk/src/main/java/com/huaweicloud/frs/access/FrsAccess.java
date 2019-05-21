@@ -31,12 +31,12 @@ public class FrsAccess extends AccessServiceImpl {
      */
     private AuthInfo authInfo = null;
 
-    public FrsAccess(AuthInfo authInfo) {
+    public FrsAccess(AuthInfo authInfo) throws Exception {
         super(FrsAccess.SERVICE_NAME, authInfo.getRegion(), authInfo.getAk(), authInfo.getSk());
         this.authInfo = authInfo;
     }
 
-    public FrsAccess(AuthInfo authInfo, int connectionTimeout) {
+    public FrsAccess(AuthInfo authInfo, int connectionTimeout) throws Exception {
         super(FrsAccess.SERVICE_NAME, authInfo.getRegion(), authInfo.getAk(), authInfo.getSk());
         this.authInfo = authInfo;
 
