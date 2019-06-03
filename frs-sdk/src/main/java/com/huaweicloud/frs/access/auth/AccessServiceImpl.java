@@ -36,10 +36,10 @@ public class AccessServiceImpl extends AccessService {
 
     private OkHttpClient client;
 
-    public AccessServiceImpl(String serviceName, String region, String ak, String sk) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+    public AccessServiceImpl(String serviceName, String region, String ak, String sk) {
         super(serviceName, region, ak, sk);
-        client = useDefaultHttpClient() ? getDefaultHttpClient() : getHttpClient();
     }
+
 
     /**
      * Make a request that can be sent by the HTTP client.
@@ -133,11 +133,11 @@ public class AccessServiceImpl extends AccessService {
         return httpRequest;
     }
 
-    protected OkHttpClient getHttpClient() throws KeyManagementException, KeyStoreException, NoSuchAlgorithmException {
+    protected OkHttpClient getHttpClient() {
         return HttpClientUtils.acceptsUntrustedCertsHttpClient();
     }
 
-    private OkHttpClient getDefaultHttpClient() throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
+    private OkHttpClient getDefaultHttpClient() throws KeyManagementException, NoSuchAlgorithmException {
 
         X509TrustManager x509m = new X509TrustManager() {
 
@@ -170,7 +170,9 @@ public class AccessServiceImpl extends AccessService {
 
     public Response access(URL url, Map<String, String> headers, RequestBody content, Long contentLength,
                            HttpMethodName httpMethod) throws Exception {
-
+        if (client == null) {
+            client = useDefaultHttpClient() ? getDefaultHttpClient() : getHttpClient();
+        }
         // Make a request for signing.
         Request request = new DefaultRequest();
         try {
@@ -239,6 +241,9 @@ public class AccessServiceImpl extends AccessService {
     public Response accessEntity(URL url, Map<String, String> header, RequestBody requestBody,
                                  Long contentLength, HttpMethodName httpMethod)
             throws IOException, KeyManagementException, KeyStoreException, NoSuchAlgorithmException{
+        if (client == null) {
+            client = useDefaultHttpClient() ? getDefaultHttpClient() : getHttpClient();
+        }
         // Make a request for signing.
         Request request = new DefaultRequest();
         try {

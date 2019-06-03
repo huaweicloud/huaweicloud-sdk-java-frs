@@ -31,12 +31,12 @@ public class FrsAccess extends AccessServiceImpl {
      */
     private AuthInfo authInfo = null;
 
-    public FrsAccess(AuthInfo authInfo) throws Exception {
+    public FrsAccess(AuthInfo authInfo) {
         super(FrsAccess.SERVICE_NAME, authInfo.getRegion(), authInfo.getAk(), authInfo.getSk());
         this.authInfo = authInfo;
     }
 
-    public FrsAccess(AuthInfo authInfo, int connectionTimeout) throws Exception {
+    public FrsAccess(AuthInfo authInfo, int connectionTimeout) {
         super(FrsAccess.SERVICE_NAME, authInfo.getRegion(), authInfo.getAk(), authInfo.getSk());
         this.authInfo = authInfo;
 
@@ -52,8 +52,7 @@ public class FrsAccess extends AccessServiceImpl {
     }
 
     @Override
-    protected OkHttpClient getHttpClient()
-            throws KeyManagementException, KeyStoreException, NoSuchAlgorithmException {
+    protected OkHttpClient getHttpClient() {
         return HttpClientUtils.acceptsUntrustedCertsHttpClient(false, null, this.connectionTimeout);
     }
 
@@ -69,7 +68,9 @@ public class FrsAccess extends AccessServiceImpl {
             HttpMethodName httpMethod = HttpMethodName.PUT;
 
             RequestBody requestBody = RequestBody.create(JSON, putBody);
-            response = access(url, requestBody, (long) putBody.getBytes().length, httpMethod);
+            Map<String, String> header = new HashMap<>();
+            header.put("Content-Type", requestBody.contentType().toString());
+            response = accessEntity(url, header, requestBody, requestBody.contentLength(), httpMethod);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

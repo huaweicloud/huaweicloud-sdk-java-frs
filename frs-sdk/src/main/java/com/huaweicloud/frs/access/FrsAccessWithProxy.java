@@ -16,12 +16,12 @@ public class FrsAccessWithProxy extends FrsAccess {
      */
     private ProxyHostInfo proxyHostInfo = null;
 
-    public FrsAccessWithProxy(AuthInfo authInfo, ProxyHostInfo hostInfo) throws Exception {
+    public FrsAccessWithProxy(AuthInfo authInfo, ProxyHostInfo hostInfo) {
         super(authInfo);
         proxyHostInfo = hostInfo;
     }
 
-    public FrsAccessWithProxy(AuthInfo authInfo, ProxyHostInfo hostInfo, int connectionTimeout) throws Exception {
+    public FrsAccessWithProxy(AuthInfo authInfo, ProxyHostInfo hostInfo, int connectionTimeout) {
         super(authInfo);
         proxyHostInfo = hostInfo;
         this.connectionTimeout = connectionTimeout;
@@ -30,8 +30,7 @@ public class FrsAccessWithProxy extends FrsAccess {
 
 
     @Override
-    protected OkHttpClient getHttpClient()
-            throws KeyManagementException, KeyStoreException, NoSuchAlgorithmException {
+    protected OkHttpClient getHttpClient() {
         return HttpClientUtils.acceptsUntrustedCertsHttpClient(true, proxyHostInfo, this.connectionTimeout);
     }
 
