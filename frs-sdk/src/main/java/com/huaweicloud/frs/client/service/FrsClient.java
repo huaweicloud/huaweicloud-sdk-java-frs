@@ -21,7 +21,6 @@ public class FrsClient implements AutoCloseable {
     private FaceService faceService;
     private FaceSetService faceSetService;
     private LiveDetectService liveDetectService;
-    private QualityService qualityService;
 
     private ApiCollectionV2 apiCollectionV2;
 
@@ -76,7 +75,6 @@ public class FrsClient implements AutoCloseable {
         this.faceService = new FaceService(this.service, this.projectId);
         this.faceSetService = new FaceSetService(this.service, this.projectId);
         this.liveDetectService = new LiveDetectService(this.service, this.projectId);
-        this.qualityService = new QualityService(this.service, this.projectId);
 
         this.apiCollectionV2 = new ApiCollectionV2(this.service, this.projectId);
     }
@@ -157,14 +155,6 @@ public class FrsClient implements AutoCloseable {
         return this.liveDetectService;
     }
 
-    /**
-     * Get face quality service instance
-     *
-     * @return Face quality service instance
-     */
-    public QualityService getQualityService() {
-        return this.qualityService;
-    }
 
     public ApiCollectionV2 getV2() {
         return this.apiCollectionV2;

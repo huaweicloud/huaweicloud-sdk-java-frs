@@ -53,7 +53,7 @@ public class LiveDetectService {
         }
 
         RequestBody requestBody = RequestBody.create(JSON, mapper.writeValueAsString(json));
-        Response httpResponse = this.service.post(uri, requestBody);
+        Response httpResponse = this.service.post(uri, requestBody, this.projectId);
         return HttpResponseUtils.httpResponse2Result(httpResponse, LiveDetectResult.class);
     }
 
@@ -106,7 +106,7 @@ public class LiveDetectService {
             builder.addFormDataPart("action_time", actionTime);
         }
         RequestBody requestBody = builder.build();
-        Response httpResponse = this.service.post(uri, requestBody);
+        Response httpResponse = this.service.post(uri, requestBody, this.projectId);
         return HttpResponseUtils.httpResponse2Result(httpResponse, LiveDetectResult.class);
     }
 

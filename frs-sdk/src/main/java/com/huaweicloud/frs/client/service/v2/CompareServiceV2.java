@@ -50,7 +50,7 @@ public class CompareServiceV2 {
         }
 
         RequestBody requestBody = RequestBody.create(JSON, mapper.writeValueAsString(json));
-        Response httpResponse = this.service.post(uri, requestBody);
+        Response httpResponse = this.service.post(uri, requestBody, this.projectId);
         return HttpResponseUtils.httpResponse2Result(httpResponse, CompareFaceResult.class);
     }
 
@@ -87,7 +87,7 @@ public class CompareServiceV2 {
                 .addFormDataPart("image1_file", image1.getName(), image1Body)
                 .addFormDataPart("image2_file", image2.getName(), image2Body)
                 .build();
-        Response httpResponse = this.service.post(uri, requestBody);
+        Response httpResponse = this.service.post(uri, requestBody, this.projectId);
         return HttpResponseUtils.httpResponse2Result(httpResponse, CompareFaceResult.class);
     }
 

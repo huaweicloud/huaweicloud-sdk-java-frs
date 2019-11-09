@@ -17,9 +17,6 @@ public class FrsConstant {
         private static final String faceSetGetOneUri = "/v1/%s/face-sets/%s";
         private static final String faceSetDeleteUri = "/v1/%s/face-sets/%s";
         private static final String liveDetectUri = "/v1/%s/live-detect";
-        private static final String faceQualityUri = "/v1/%s/face/quality/face-quality";
-        private static final String blurClassifyUri = "/v1/%s/face/quality/blur-classify";
-        private static final String headPoseEstimate = "/v1/%s/face/quality/head-pose-estimate";
 
         public static String getFaceDetectUri() {
             return faceDetectUri;
@@ -81,17 +78,6 @@ public class FrsConstant {
             return liveDetectUri;
         }
 
-        public static String getFaceQualityUri() {
-            return faceQualityUri;
-        }
-
-        public static String getBlurClassifyUri() {
-            return blurClassifyUri;
-        }
-
-        public static String getHeadPoseEstimate() {
-            return headPoseEstimate;
-        }
     }
 
     public static class V2 {
@@ -99,6 +85,7 @@ public class FrsConstant {
         private static final String faceCompareUri = "/v2/%s/face-compare";
         private static final String faceSearchUri = "/v2/%s/face-sets/%s/search";
         private static final String faceAddUri = "/v2/%s/face-sets/%s/faces";
+        private static final String faceUpdateUri = "/v2/%s/face-sets/%s/faces";
         private static final String faceGetRangeUri = "/v2/%s/face-sets/%s/faces?offset=%d&limit=%d";
         private static final String faceGetOneUri = "/v2/%s/face-sets/%s/faces?face_id=%s";
         private static final String faceDeleteByExternalImageIdUri = "/v2/%s/face-sets/%s/faces?external_image_id=%s";
@@ -108,10 +95,7 @@ public class FrsConstant {
         private static final String faceSetGetAllUri = "/v2/%s/face-sets";
         private static final String faceSetGetOneUri = "/v2/%s/face-sets/%s";
         private static final String faceSetDeleteUri = "/v2/%s/face-sets/%s";
-        private static final String liveDetectUri = "/v2/%s/live-detect";
-        private static final String faceQualityUri = "/v2/%s/face/quality/face-quality";
-        private static final String blurClassifyUri = "/v2/%s/face/quality/blur-classify";
-        private static final String headPoseEstimate = "/v2/%s/face/quality/head-pose-estimate";
+
 
         public static String getFaceDetectUri() {
             return faceDetectUri;
@@ -127,6 +111,10 @@ public class FrsConstant {
 
         public static String getFaceAddUri() {
             return faceAddUri;
+        }
+
+        public static String getFaceUpdateUri() {
+            return faceUpdateUri;
         }
 
         public static String getFaceGetRangeUri() {
@@ -165,21 +153,6 @@ public class FrsConstant {
             return faceSetDeleteUri;
         }
 
-        public static String getLiveDetectUri() {
-            return liveDetectUri;
-        }
-
-        public static String getFaceQualityUri() {
-            return faceQualityUri;
-        }
-
-        public static String getBlurClassifyUri() {
-            return blurClassifyUri;
-        }
-
-        public static String getHeadPoseEstimate() {
-            return headPoseEstimate;
-        }
     }
 
 }

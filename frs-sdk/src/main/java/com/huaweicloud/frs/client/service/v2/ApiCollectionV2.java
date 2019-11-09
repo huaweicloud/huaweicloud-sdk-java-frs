@@ -13,8 +13,6 @@ public class ApiCollectionV2 {
 
     private FaceSetServiceV2 faceSetService;
 
-    private LiveDetectServiceV2 liveDetectService;
-
     private SearchServiceV2 searchService;
 
     public ApiCollectionV2(FrsAccess service, String projectId) {
@@ -23,7 +21,6 @@ public class ApiCollectionV2 {
         this.searchService = new SearchServiceV2(service, projectId);
         this.faceService = new FaceServiceV2(service, projectId);
         this.faceSetService = new FaceSetServiceV2(service, projectId);
-        this.liveDetectService = new LiveDetectServiceV2(service, projectId);
     }
 
     public CompareServiceV2 getCompareService() {
@@ -40,10 +37,6 @@ public class ApiCollectionV2 {
 
     public FaceSetServiceV2 getFaceSetService() {
         return faceSetService;
-    }
-
-    public LiveDetectServiceV2 getLiveDetectService() {
-        return liveDetectService;
     }
 
     public SearchServiceV2 getSearchService() {

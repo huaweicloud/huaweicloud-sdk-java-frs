@@ -53,7 +53,7 @@ public class DetectService {
         }
 
         RequestBody requestBody = RequestBody.create(JSON, mapper.writeValueAsString(json));
-        Response httpResponse = this.service.post(uri, requestBody);
+        Response httpResponse = this.service.post(uri, requestBody, this.projectId);
         return HttpResponseUtils.httpResponse2Result(httpResponse, DetectFaceResult.class);
     }
 
@@ -102,7 +102,7 @@ public class DetectService {
             builder.addFormDataPart("attributes", attributes);
         }
         RequestBody requestBody = builder.build();
-        Response httpResponse = this.service.post(uri, requestBody);
+        Response httpResponse = this.service.post(uri, requestBody, this.projectId);
         return HttpResponseUtils.httpResponse2Result(httpResponse, DetectFaceResult.class);
     }
 

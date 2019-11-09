@@ -60,7 +60,7 @@ public class FrsAccess extends AccessServiceImpl {
         return false;
     }
 
-    public Response put(String requestUrl, String putBody) {
+    public Response put(String requestUrl, String putBody, String XProjectId) {
 
         Response response = null;
         try {
@@ -70,6 +70,7 @@ public class FrsAccess extends AccessServiceImpl {
             RequestBody requestBody = RequestBody.create(JSON, putBody);
             Map<String, String> header = new HashMap<>();
             header.put("Content-Type", requestBody.contentType().toString());
+            header.put("X-Project-Id",XProjectId);
             response = accessEntity(url, header, requestBody, requestBody.contentLength(), httpMethod);
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,7 +79,7 @@ public class FrsAccess extends AccessServiceImpl {
         return response;
     }
 
-    public Response get(String requestUrl) {
+    public Response get(String requestUrl, String XProjectId) {
 
         Response response = null;
         try {
@@ -86,6 +87,7 @@ public class FrsAccess extends AccessServiceImpl {
             HttpMethodName httpMethod = HttpMethodName.GET;
             Map<String, String> header = new HashMap<>();
             header.put("Content-Type", "application/json; charset=utf-8");
+            header.put("X-Project-Id",XProjectId);
             response = access(url, header, httpMethod);
 
         } catch (Exception e) {
@@ -95,7 +97,7 @@ public class FrsAccess extends AccessServiceImpl {
         return response;
     }
 
-    public Response post(String requestUrl, RequestBody requestBody) throws IOException {
+    public Response post(String requestUrl, RequestBody requestBody, String XProjectId) throws IOException {
 
         URL url = null;
         try {
@@ -107,6 +109,7 @@ public class FrsAccess extends AccessServiceImpl {
         Response response = null;
         Map<String, String> header = new HashMap<>();
         header.put("Content-Type", requestBody.contentType().toString());
+        header.put("X-Project-Id",XProjectId);
         try {
             response = accessEntity(url, header, requestBody, (long) requestBody.contentLength(), httpMethod);
         } catch (IOException e) {
@@ -118,7 +121,7 @@ public class FrsAccess extends AccessServiceImpl {
         return response;
     }
 
-    public Response delete(String requestUrl) {
+    public Response delete(String requestUrl, String XProjectId) {
         Response response = null;
 
         try {
@@ -126,6 +129,7 @@ public class FrsAccess extends AccessServiceImpl {
             HttpMethodName httpMethod = HttpMethodName.DELETE;
             Map<String, String> header = new HashMap<>();
             header.put("Content-Type", "application/json; charset=utf-8");
+            header.put("X-Project-Id",XProjectId);
             response = this.access(url, header, httpMethod);
             return response;
         } catch (Exception var6) {

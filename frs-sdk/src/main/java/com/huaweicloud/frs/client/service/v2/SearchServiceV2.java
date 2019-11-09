@@ -68,7 +68,7 @@ public class SearchServiceV2 {
         }
 
         RequestBody requestBody = RequestBody.create(JSON, mapper.writeValueAsString(json));
-        Response httpResponse = this.service.post(uri, requestBody);
+        Response httpResponse = this.service.post(uri, requestBody, this.projectId);
         return HttpResponseUtils.httpResponse2Result(httpResponse, SearchFaceResult.class);
     }
 
@@ -158,7 +158,7 @@ public class SearchServiceV2 {
             builder.addFormDataPart("filter", filter);
         }
         RequestBody requestBody = builder.build();
-        Response httpResponse = this.service.post(uri, requestBody);
+        Response httpResponse = this.service.post(uri, requestBody, this.projectId);
         return HttpResponseUtils.httpResponse2Result(httpResponse, SearchFaceResult.class);
     }
 

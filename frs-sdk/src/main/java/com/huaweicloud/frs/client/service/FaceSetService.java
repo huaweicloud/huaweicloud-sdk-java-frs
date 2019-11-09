@@ -60,7 +60,7 @@ public class FaceSetService {
             json.put("external_fields", createExternalFields.getExternalFields());
         }
         RequestBody requestBody = RequestBody.create(JSON, mapper.writeValueAsString(json));
-        Response httpResponse = this.service.post(uri, requestBody);
+        Response httpResponse = this.service.post(uri, requestBody, this.projectId);
         return HttpResponseUtils.httpResponse2Result(httpResponse, CreateFaceSetResult.class);
     }
 
@@ -98,7 +98,7 @@ public class FaceSetService {
      */
     public GetAllFaceSetsResult getAllFaceSets() throws FrsException, IOException {
         String uri = String.format(FrsConstant.V1.getFaceSetGetAllUri(), this.projectId);
-        Response httpResponse = this.service.get(uri);
+        Response httpResponse = this.service.get(uri, this.projectId);
         return HttpResponseUtils.httpResponse2Result(httpResponse, GetAllFaceSetsResult.class);
     }
 
@@ -112,7 +112,7 @@ public class FaceSetService {
      */
     public GetFaceSetResult getFaceSet(String faceSetName) throws FrsException, IOException {
         String uri = String.format(FrsConstant.V1.getFaceSetGetOneUri(), this.projectId, faceSetName);
-        Response httpResponse = this.service.get(uri);
+        Response httpResponse = this.service.get(uri, this.projectId);
         return HttpResponseUtils.httpResponse2Result(httpResponse, GetFaceSetResult.class);
     }
 
@@ -126,7 +126,7 @@ public class FaceSetService {
      */
     public DeleteFaceSetResult deleteFaceSet(String faceSetName) throws FrsException, IOException {
         String uri = String.format(FrsConstant.V1.getFaceSetDeleteUri(), this.projectId, faceSetName);
-        Response httpResponse = this.service.delete(uri);
+        Response httpResponse = this.service.delete(uri, this.projectId);
         return HttpResponseUtils.httpResponse2Result(httpResponse, DeleteFaceSetResult.class);
     }
 }
