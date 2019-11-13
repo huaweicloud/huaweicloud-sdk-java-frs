@@ -28,17 +28,7 @@ public abstract class AccessService {
     public abstract Response accessEntity(URL url, Map<String, String> header, RequestBody entity,
                                           Long contentLength, HttpMethodName httpMethod) throws Exception;
 
-    public Response access(URL url, Map<String, String> header, HttpMethodName httpMethod) throws Exception {
-        return this.accessEntity(url, header, null, 0L, httpMethod);
-    }
-
-    public Response access(URL url, RequestBody requestBody, long length, HttpMethodName httpMethod) throws Exception {
-        return this.accessEntity(url, null, null, 0L, httpMethod);
-    }
-
-    public Response access(URL url, HttpMethodName httpMethod) throws Exception {
-        return this.accessEntity(url, null, null, 0L, httpMethod);
-    }
+    public abstract Response access(URL url, Map<String, String> header, HttpMethodName httpMethod) throws Exception;
 
     public String getServiceName() {
         return serviceName;

@@ -138,4 +138,28 @@ public class FrsAccess extends AccessServiceImpl {
         }
     }
 
+    public Response delete(String requestUrl, RequestBody requestBody, String XProjectId) throws IOException {
+
+        URL url = null;
+        try {
+            url = new URL(generateWholeUrl(authInfo.getEndPoint(), requestUrl));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpMethodName httpMethod = HttpMethodName.DELETE;
+        Response response = null;
+        Map<String, String> header = new HashMap<>();
+        header.put("Content-Type", requestBody.contentType().toString());
+        header.put("X-Project-Id",XProjectId);
+        try {
+            response = accessEntity(url, header, requestBody, (long) requestBody.contentLength(), httpMethod);
+        } catch (IOException e) {
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return response;
+    }
+
 }

@@ -364,6 +364,18 @@ public class FaceServiceV2 {
         return HttpResponseUtils.httpResponse2Result(httpResponse, DeleteFaceResult.class);
     }
 
+    public DeleteFaceResult deleteFaceBybatch(String faceSetName, String filter) throws FrsException, IOException {
+        String uri = String.format(FrsConstant.V2.getFaceDeleteByBatchUri(), this.projectId,faceSetName);
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> json = new HashMap<>();
+        if (filter != null) {
+            json.put("filter", filter);
+        }
+        RequestBody requestBody = RequestBody.create(JSON, mapper.writeValueAsString(json));
+        Response httpResponse = this.service.delete(uri,requestBody,this.projectId);
+        return HttpResponseUtils.httpResponse2Result(httpResponse, DeleteFaceResult.class);
+    }
+
     /**
      * @param faceSetName Face set name
      * @param fieldId     Field id

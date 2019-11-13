@@ -12,6 +12,7 @@ public class FrsConstant {
         private static final String faceDeleteByExternalImageIdUri = "/v1/%s/face-sets/%s/faces?external_image_id=%s";
         private static final String faceDeleteByFaceIdUri = "/v1/%s/face-sets/%s/faces?face_id=%s";
         private static final String faceDeleteByFieldIdUri = "/v1/%s/face-sets/%s/faces?%s=%s";
+        private static final String faceDeleteByBatchUri = "/v1/%s/face-sets/%s/faces/batch";
         private static final String faceSetCreateUri = "/v1/%s/face-sets";
         private static final String faceSetGetAllUri = "/v1/%s/face-sets";
         private static final String faceSetGetOneUri = "/v1/%s/face-sets/%s";
@@ -58,6 +59,10 @@ public class FrsConstant {
             return faceDeleteByFaceIdUri;
         }
 
+        public static String getFaceDeleteByBatchUri() {
+            return faceDeleteByBatchUri;
+        }
+
         public static String getFaceSetCreateUri() {
             return faceSetCreateUri;
         }
@@ -91,6 +96,7 @@ public class FrsConstant {
         private static final String faceDeleteByExternalImageIdUri = "/v2/%s/face-sets/%s/faces?external_image_id=%s";
         private static final String faceDeleteByFaceIdUri = "/v2/%s/face-sets/%s/faces?face_id=%s";
         private static final String faceDeleteByFieldIdUri = "/v2/%s/face-sets/%s/faces?%s=%s";
+        private static final String faceDeleteByBatchUri = "/v2/%s/face-sets/%s/faces/batch";
         private static final String faceSetCreateUri = "/v2/%s/face-sets";
         private static final String faceSetGetAllUri = "/v2/%s/face-sets";
         private static final String faceSetGetOneUri = "/v2/%s/face-sets/%s";
@@ -135,6 +141,10 @@ public class FrsConstant {
 
         public static String getFaceDeleteByFaceIdUri() {
             return faceDeleteByFaceIdUri;
+        }
+
+        public static String getFaceDeleteByBatchUri() {
+            return faceDeleteByBatchUri;
         }
 
         public static String getFaceSetCreateUri() {

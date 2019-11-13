@@ -46,40 +46,13 @@ public class AccessServiceImpl extends AccessService {
      *
      * @param url           specifies the API access path.
      * @param header        specifies the header information to be added.
-     * @param content       specifies the body content to be sent in the API call.
-     * @param contentLength specifies the length of the content. This parameter is optional.
      * @param httpMethod    specifies the HTTP method to be used.
      * @return specifies the request that can be sent by an HTTP client.
      */
-    private static okhttp3.Request createRequest(URL url, Header header, RequestBody content, Long contentLength,
-                                                 HttpMethodName httpMethod) {
+    private static okhttp3.Request createRequest(URL url, Header header,HttpMethodName httpMethod) {
 
         okhttp3.Request httpRequest;
-        if (httpMethod == HttpMethodName.POST) {
-            okhttp3.Request.Builder postMethod = new okhttp3.Request.Builder();
-            postMethod.url(url);
-
-            if (content != null) {
-                postMethod.post(content);
-            }
-            httpRequest = postMethod.build();
-        } else if (httpMethod == HttpMethodName.PUT) {
-            okhttp3.Request.Builder putMethod = new okhttp3.Request.Builder();
-            putMethod.url(url);
-            httpRequest = putMethod.build();
-
-            if (content != null) {
-                putMethod.put(content);
-            }
-        } else if (httpMethod == HttpMethodName.PATCH) {
-            okhttp3.Request.Builder patchMethod = new okhttp3.Request.Builder();
-            patchMethod.url(url);
-            httpRequest = patchMethod.build();
-
-            if (content != null) {
-                patchMethod.patch(content);
-            }
-        } else if (httpMethod == HttpMethodName.GET) {
+        if (httpMethod == HttpMethodName.GET) {
             httpRequest = new okhttp3.Request.Builder().url(url).get().build();
         } else if (httpMethod == HttpMethodName.DELETE) {
             httpRequest = new okhttp3.Request.Builder().url(url).delete().build();
@@ -89,7 +62,9 @@ public class AccessServiceImpl extends AccessService {
             throw new RuntimeException("Unknown HTTP method name: " + httpMethod);
         }
 
-        httpRequest.newBuilder().addHeader(header.name.toString(), header.value.toString());
+        if (header != null) {
+            httpRequest = httpRequest.newBuilder().addHeader(header.name.toString(), header.value.toString()).build();
+        }
         return httpRequest;
     }
 
@@ -121,7 +96,12 @@ public class AccessServiceImpl extends AccessService {
         } else if (httpMethod == HttpMethodName.GET) {
             httpRequest = new okhttp3.Request.Builder().url(url).get().build();
         } else if (httpMethod == HttpMethodName.DELETE) {
-            httpRequest = new okhttp3.Request.Builder().url(url).delete().build();
+            okhttp3.Request.Builder deleteMethod = new okhttp3.Request.Builder();
+            deleteMethod.url(url);
+            if (requestBody != null) {
+                deleteMethod.delete(requestBody);
+            }
+            httpRequest = deleteMethod.build();
         } else if (httpMethod == HttpMethodName.HEAD) {
             httpRequest = new okhttp3.Request.Builder().url(url).head().build();
         } else {
@@ -168,7 +148,7 @@ public class AccessServiceImpl extends AccessService {
         return true;
     }
 
-    public Response access(URL url, Map<String, String> headers, RequestBody content, Long contentLength,
+    public Response access(URL url, Map<String, String> headers,
                            HttpMethodName httpMethod) throws Exception {
         if (client == null) {
             client = useDefaultHttpClient() ? getDefaultHttpClient() : getHttpClient();
@@ -220,7 +200,7 @@ public class AccessServiceImpl extends AccessService {
         signer.sign(request, new BasicCredentials(this.ak, this.sk));
 
         // Make a request that can be sent by the HTTP client.
-        okhttp3.Request httpRequestBase = createRequest(url, null, content, contentLength, httpMethod);
+        okhttp3.Request httpRequestBase = createRequest(url, null, httpMethod);
         Map<String, String> requestHeaders = request.getHeaders();
 
         // Put the header of the signed request to the new request.
@@ -238,9 +218,9 @@ public class AccessServiceImpl extends AccessService {
     }
 
     @Override
-    public Response accessEntity(URL url, Map<String, String> header, RequestBody requestBody,
+    public Response accessEntity(URL url, Map<String, String> headers, RequestBody requestBody,
                                  Long contentLength, HttpMethodName httpMethod)
-            throws IOException, KeyManagementException, KeyStoreException, NoSuchAlgorithmException{
+            throws IOException, KeyManagementException, NoSuchAlgorithmException{
         if (client == null) {
             client = useDefaultHttpClient() ? getDefaultHttpClient() : getHttpClient();
         }
@@ -276,8 +256,8 @@ public class AccessServiceImpl extends AccessService {
         }
         // Set the request method.
         request.setHttpMethod(httpMethod);
-        if (header != null) {
-            request.setHeaders(header);
+        if (headers != null) {
+            request.setHeaders(headers);
         }
         // Configure the request content.
         if (requestBody != null) {
