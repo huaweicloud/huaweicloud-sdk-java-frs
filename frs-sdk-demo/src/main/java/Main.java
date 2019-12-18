@@ -45,7 +45,6 @@ public class Main {
         frsClient.getFaceService();
         frsClient.getFaceSetService();
         frsClient.getLiveDetectService();
-        frsClient.getQualityService();
         frsClient.getSearchService();
 
         //Step.3 User api
@@ -137,7 +136,6 @@ public class Main {
         frsClient.getV2().getDetectService();
         frsClient.getV2().getFaceService();
         frsClient.getV2().getFaceSetService();
-        frsClient.getV2().getLiveDetectService();
         frsClient.getV2().getSearchService();
 
         //Step.3 User api

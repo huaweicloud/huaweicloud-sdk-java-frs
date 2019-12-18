@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.huaweicloud.frs</groupId>
+    <artifactId>frs-sdk-SensitiveDataStorage-demo</artifactId>
+    <version>1.0</version>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/Java</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.* </include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.huaweicloud.frs</groupId>
+            <artifactId>frs-sdk</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/frs-sdk-1.0-jar-with-dependencies.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.18</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.2.2</version>
+        </dependency>
+
+    </dependencies>
+
+
+</project>
