@@ -26,6 +26,10 @@ public class Attributes extends JSONObj {
     @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private String smile;
 
+    @JsonProperty(value = "face_angle")
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
+    private Integer faceAngle;
+
     public HeadPose getHeadPose() {
         return headPose;
     }
@@ -64,5 +68,13 @@ public class Attributes extends JSONObj {
 
     public void setSmile(String smile) {
         this.smile = smile;
+    }
+
+    public Integer getFaceAngle() {
+        return faceAngle;
+    }
+
+    public void setFaceAngle(Integer faceAngle) {
+        this.faceAngle = faceAngle;
     }
 }

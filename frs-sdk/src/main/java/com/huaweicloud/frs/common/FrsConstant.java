@@ -18,6 +18,7 @@ public class FrsConstant {
         private static final String faceSetGetOneUri = "/v1/%s/face-sets/%s";
         private static final String faceSetDeleteUri = "/v1/%s/face-sets/%s";
         private static final String liveDetectUri = "/v1/%s/live-detect";
+        private static final String liveDetectFaceUri = "/v1/%s/live-detect-face";
 
         public static String getFaceDetectUri() {
             return faceDetectUri;
@@ -81,6 +82,10 @@ public class FrsConstant {
 
         public static String getLiveDetectUri() {
             return liveDetectUri;
+        }
+
+        public static String getLiveDetectFaceUri() {
+            return liveDetectFaceUri;
         }
 
     }

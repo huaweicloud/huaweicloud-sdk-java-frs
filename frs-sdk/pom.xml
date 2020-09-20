@@ -6,15 +6,15 @@
 
     <groupId>com.huaweicloud.frs</groupId>
     <artifactId>frs-sdk</artifactId>
-    <version>1.3</version>
+    <version>1.5</version>
 
     <dependencies>
         <!--用下面命令把java-sdk-core-2.0.1.jar安装到本地maven仓库-->
         <!--mvn -s conf/settings(settings目录).xml install:install-file -Dfile=./cloud-java-sdk-frs/lib/java-sdk-core-3.0.9.jar（java-sdk-core-3.0.9.jar目录，注意版本） -DgroupId=com.huawei -DartifactId=java-sdk-core -Dversion=3.0.9（注意版本） -Dpackaging=jar compile install（compile install 看自己是否需要）-->
         <dependency>
-            <groupId>com.huawei.apigateway</groupId>
+            <groupId>com.huawei</groupId>
             <artifactId>java-sdk-core</artifactId>
-            <version>3.0.8</version>
+            <version>3.0.9</version>
         </dependency>
 
         <dependency>
