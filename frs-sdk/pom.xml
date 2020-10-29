@@ -6,7 +6,7 @@
 
     <groupId>com.huaweicloud.frs</groupId>
     <artifactId>frs-sdk</artifactId>
-    <version>1.5</version>
+    <version>1.6</version>
 
     <dependencies>
         <!--用下面命令把java-sdk-core-2.0.1.jar安装到本地maven仓库-->
